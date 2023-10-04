@@ -1,0 +1,51 @@
+import pandas as pd
+import matplotlib.pyplot as plt  
+        
+def generar_secuencia_collatz(n):
+    secuencia = [n]
+    while n != 1:
+        if n % 2 == 0:
+            n = n // 2
+            secuencia.append(n)
+        else:
+            n = 3 * n + 1
+            secuencia.append(n)
+    return secuencia
+
+def cantidad_iteraciones(secuencia):
+    return len(secuencia) - 1
+
+def mostrar_resultados(lista):
+    df = pd.DataFrame(lista, columns=['Número', 'Cantidad de Iteraciones'])
+    print(df)
+    plt.figure(figsize=(10, 5))
+    plt.scatter(x=df['Número'], y=df['Cantidad de Iteraciones'], color = 'blue', marker='o')
+    plt.xlabel('Número')
+    plt.ylabel('Cantidad de Iteraciones')
+    plt.title('Conjetura de Collatz')
+    plt.grid(True)
+    plt.show()
+
+def main():
+    num_1 = 0
+    while num_1 < 1:
+        num_1 = int(input("Desde el número natural: "))
+    
+    if num_1 >= 1:
+        num_2 = int(input("Hasta el número natural: "))
+        if num_1 <= num_2:
+            lista = []
+            for i in range(num_1, num_2 + 1):
+                sequence = generar_secuencia_collatz(i)
+                iteraciones = cantidad_iteraciones(sequence)
+                datos = [i, iteraciones]
+                lista.append(datos)
+            mostrar_resultados(lista)
+        else:
+            print("El primer número debe ser menor que el segundo")
+            
+    else:
+        print("Los números ingresados deben ser naturales!!!")
+        
+if __name__ == "__main__":
+    main()
